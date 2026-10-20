@@ -1,0 +1,31 @@
+﻿# Python cache
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+venv/
+
+# Environment variables
+.env
+.env.*
+
+# Local datasets
+data/raw/*
+data/processed/*
+data/external/*
+
+# Preserve folder placeholders
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/external/.gitkeep
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Credentials
+credentials.json
+*.key
