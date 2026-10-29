@@ -19,3 +19,16 @@ Completed:
 ## Current Status
 
 No experimental results available yet.
+
+## Milestone 2 - Initial ML Baselines
+
+- Established a fixed molecule-wise train/test split.
+- Compared mean prediction with Ridge regression.
+- Used three-fold cross-validation on training molecules.
+- Reserved the final test set for later evaluation.
+- Saved model configuration and validation metrics.
+
+Next:
+- Review baseline errors.
+- Finalize model selection.
+- Connect predicted parameters to FeOs.

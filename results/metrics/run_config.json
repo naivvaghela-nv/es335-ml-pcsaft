@@ -1,0 +1,21 @@
+{
+  "random_state": 42,
+  "test_fraction": 0.2,
+  "cv_folds": 3,
+  "features": [
+    "molecular_weight",
+    "carbon_count",
+    "ring_count",
+    "rotatable_bonds",
+    "branch_points"
+  ],
+  "targets": [
+    "m",
+    "sigma",
+    "epsilon_k"
+  ],
+  "molecules_total": 194,
+  "molecules_train": 155,
+  "molecules_test_reserved": 39,
+  "ridge_alpha": 1.0
+}
