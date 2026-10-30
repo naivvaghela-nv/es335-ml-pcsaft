@@ -1,0 +1,13 @@
+name,smiles,n_points,n_reference_success,n_ml_success,n_comparable,mean_ape_percent
+"1,1,3-trimethylcyclohexane",CC1CCCC(C)(C)C1,4,4,4,4,1.9034502454774196
+"2,3-dimethyloctadecane",CCCCCCCCCCCCCCCC(C)C(C)C,4,4,4,4,12.164319686076361
+"2,4,6-trimethyloctane",CCC(C)CC(C)CC(C)C,4,4,4,4,15.196087461817271
+"2,6-dimethyloctane",CCC(C)CCCC(C)C,4,4,4,4,3.9679713711159112
+"2,7-dimethyloctane",CC(C)CCCCC(C)C,4,4,4,4,3.085039064564053
+4-methylpentadecane,CCCCCCCCCCCC(C)CCC,4,4,4,4,1.2165711900839806
+4-methyltridecane,CCCCCCCCCC(C)CCC,4,4,4,4,2.8732869584196705
+5-methyltetradecane,CCCCCCCCCC(C)CCCC,4,4,4,4,2.188172031888592
+"cis-1,3-dimethylcyclopentane",C[C@@H]1CC[C@H](C)C1,4,4,4,4,15.653711586740943
+cyclobutane,C1CCC1,4,4,4,4,24.422080661260573
+cyclopropane,C1CC1,4,4,4,4,25.162072551027823
+n-nonylcyclohexane,CCCCCCCCCC1CCCCC1,4,4,4,4,25.997876331802047
