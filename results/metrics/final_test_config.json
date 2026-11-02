@@ -1,0 +1,32 @@
+{
+  "phase": "FINAL HELD-OUT TEST: one-time evaluation; no further model selection",
+  "training_molecules": 155,
+  "held_out_test_molecules": 39,
+  "chosen_model": "Ridge_5",
+  "chosen_based_on": "Development validation pressure MAPE: Ridge_5 16.2203%; Ridge_12 17.9553%; ExtraTrees_156 25.9094%",
+  "target_parameters": [
+    "m",
+    "sigma",
+    "epsilon_k"
+  ],
+  "features": [
+    "molecular_weight",
+    "carbon_count",
+    "ring_count",
+    "rotatable_bonds",
+    "branch_points"
+  ],
+  "estimator": "SimpleImputer(median) + StandardScaler + Ridge(alpha=1.0)",
+  "test_split_random_state": 42,
+  "temperature_fractions_of_reference_Tc": [
+    0.65,
+    0.7,
+    0.75,
+    0.8
+  ],
+  "source_dataset_sha256": "9271ceedd48b7116d03e7a40d220499b61fe5c3a0969cbd04d9fee56eb0f301c",
+  "frozen_split_sha256": "e0ae604ca41b20bf509914c2506c426ca44d8041e0ad38625824fac0d117435a",
+  "raw_pcsaft_sha256": "87fdcd8733245d90cd6ad9e9d7d0583bd3f7ffb3c4d67a25197190f289e2a679",
+  "interpretation": "Errors relative to published-parameter PC-SAFT, not independent experimental measurements; published reference Tc defines evaluation temperature grid.",
+  "metric_caveat": "Pressure/density MAPE calculated only for comparable states; inspect failed counts and per-molecule table."
+}
