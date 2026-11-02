@@ -110,3 +110,49 @@ have not been isolated experimentally.
 
 Next: refit on 155 training molecules and evaluate the
 reserved 39 final-test molecules once.
+
+## November 2, 2026 - Scientific Evaluation
+
+Development data:
+- 116 fitting molecules
+- 39 validation molecules
+- 39 final-test molecules untouched
+
+Saturation-pressure mean absolute percentage error:
+- Ridge 5: 16.2203%
+- Ridge 12: 17.9553%
+- Extra Trees 156: 25.9094%
+
+Saturated-liquid-density mean absolute percentage error:
+- Ridge 5: 2.5689%
+- Ridge 12: 1.7890%
+- Extra Trees 156: 3.8550%
+
+All 156 density and pressure comparisons per model
+were successful.
+
+Recomputed pressures agreed with saved values,
+with maximum relative discrepancy 1.29e-10.
+
+Scientific interpretation:
+Ridge 5 performed best for saturation pressure,
+while Ridge 12 performed best for liquid density.
+The optimal ML parameter predictor is not necessarily
+the optimal downstream thermodynamic predictor.
+
+Local logarithmic pressure sensitivities were
+evaluated for five development molecules.
+
+Results:
+- Segment number m: about -4.92 to -5.73
+- Segment diameter sigma: approximately -3.00
+- Dispersion energy epsilon/k: about -6.93 to -10.39
+
+These results suggest that pressure is highly sensitive
+to combinations of molecular parameter errors.
+Parameter error cancellation or reinforcement is a
+possible explanation, pending decomposition analysis.
+
+All thermodynamic accuracy comparisons above are
+relative to published-parameter PC-SAFT calculations,
+not independent experimental measurements.
