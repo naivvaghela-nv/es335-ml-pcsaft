@@ -61,3 +61,52 @@ Inspect per-molecule errors and perform broader development
 validation before selecting the final model.
 
 The frozen final test set remains unused.
+
+## November 2, 2026 - Overfitting and Model Selection
+
+Development-training molecules: 116
+Development-validation molecules: 39
+Reserved final-test molecules: 39 (untouched)
+
+Training vs validation parameter MAE ratios:
+
+Ridge 5:
+- m: 1.13x
+- sigma: 1.10x
+- epsilon/k: 0.95x
+
+Extra Trees 156:
+- m: 4.37x
+- sigma: 3.00x
+- epsilon/k: 3.31x
+
+Interpretation:
+Extra Trees shows substantial training-validation gaps,
+consistent with overfitting or high model variance.
+
+Despite this, Extra Trees achieves lower validation
+parameter MAE than Ridge 5 for all three targets.
+
+Downstream VLE mean APE on 39 development molecules:
+- Ridge 5: 16.2203%
+- Ridge 12: 17.9553%
+- Extra Trees 156: 25.9094%
+
+All three configurations completed 156/156 pressure
+comparisons.
+
+Model-selection decision:
+Ridge 5 is selected as the primary final VLE model
+because it produced the lowest development pressure
+error and uses a simpler molecular representation.
+
+Extra Trees 156 remains a comparison model demonstrating
+that lower parameter MAE does not guarantee lower VLE
+pressure error.
+
+Possible explanations include PC-SAFT sensitivity and
+interactions between parameter errors. These mechanisms
+have not been isolated experimentally.
+
+Next: refit on 155 training molecules and evaluate the
+reserved 39 final-test molecules once.
