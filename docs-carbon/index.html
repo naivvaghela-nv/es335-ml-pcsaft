@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="An interactive study of molecular descriptors, PC-SAFT parameter prediction and pure-component hydrocarbon phase equilibrium. ES 335 Machine Learning.">
+  <title>ML / PC-SAFT | Research analysis · Carbon alternative</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script>
+    (function(){
+      var theme='light';
+      try { if(localStorage.getItem('es335-carbon-theme')==='dark')theme='dark'; } catch(_e){}
+      document.documentElement.dataset.theme=theme;
+    })();
+  </script>
+  <link rel="stylesheet" href="assets/carbon.css?v=2">
+  <script src="assets/carbon.js?v=2" defer></script>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to main content</a>
+  <div class="utility">
+    <div class="container utility-inner"><span>ES 335 / Machine Learning · IIT Gandhinagar</span><span class="utility-right">Independent, held-out evaluation · Research concept 02 / Carbon</span></div>
+  </div>
+  <header class="site-header">
+    <div class="container nav-bar">
+      <a class="brand" href="#top" aria-label="ML PC-SAFT home"><span class="mark" aria-hidden="true">P<span class="mark-slash">/</span>S</span><span>ML / PC-SAFT <small>Research analysis</small></span></a>
+      <button class="mobile-nav-toggle" id="nav-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle site navigation">☰</button>
+      <nav id="main-nav" class="main-nav" aria-label="Main navigation"><a href="#question">The study</a><a href="#explorer">Property explorer</a><a href="#models">Model evolution</a><a href="#findings">Findings</a><a href="#methods">Reproduce</a></nav>
+      <div class="theme-switch" role="group" aria-label="Website appearance">
+        <button type="button" data-theme-choice="light" aria-pressed="true">Light</button>
+        <button type="button" data-theme-choice="dark" aria-pressed="false">Dark</button>
+      </div>
+      <a class="nav-end" href="#explorer">View results <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <main id="content">
+    <section class="hero" id="top">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-index">01</span> Computational thermodynamics / supervised learning</p>
+          <h1>From molecules<br>to <span class="blue-word">phase equilibrium.</span></h1>
+          <p class="hero-description">A structure-to-properties investigation of PC-SAFT: train on molecular descriptors, infer molecular parameters, and test the resulting vapor–liquid equilibrium predictions.</p>
+          <div class="hero-actions"><a class="btn btn-primary" href="#explorer">Explore the held-out results <span>↗</span></a><a class="btn btn-secondary" href="#models">How the models evolved <span>→</span></a></div>
+          <div class="hero-meta"><span><strong>Dataset</strong> 194 hydrocarbons</span><span><strong>Selected model</strong> Ridge / 5 descriptors</span></div>
+        </div>
+        <div class="hero-diagram" aria-label="Computational research pipeline">
+          <div class="diagram-head"><span>RESEARCH FRAMEWORK</span><span>01—04</span></div>
+          <div class="diagram-step"><div class="diagram-number">01</div><div><b>SMILES</b><small>Molecular structure</small></div><span aria-hidden="true">C—C</span></div>
+          <div class="diagram-step"><div class="diagram-number">02</div><div><b>RDKit descriptors</b><small>Mass, branching, rings, rotatable bonds</small></div><span aria-hidden="true">x₁ … x₅</span></div>
+          <div class="diagram-step"><div class="diagram-number">03</div><div><b>Ridge regression</b><small>m · σ · ε/k</small></div><span aria-hidden="true">θ̂</span></div>
+          <div class="diagram-step final-step"><div class="diagram-number">04</div><div><b>FeOs / PC-SAFT</b><small>Vapor pressure and liquid density</small></div><span aria-hidden="true">P, ρ</span></div>
+          <div class="diagram-foot"><span>Prediction fidelity</span><strong>Published-parameter PC-SAFT as reference</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="metrics" aria-labelledby="metric-heading"><div class="container">
+      <div class="section-kicker" id="metric-heading">Frozen held-out evaluation</div>
+      <div class="metric-grid">
+        <div class="metric"><p>Reserved test molecules</p><strong id="metric-n">39</strong><small>Never used for model selection</small></div>
+        <div class="metric"><p>Mean pressure deviation</p><strong id="metric-p">20.54<span>%</span></strong><small>Absolute percentage error</small></div>
+        <div class="metric"><p>Mean liquid-density deviation</p><strong id="metric-rho">2.66<span>%</span></strong><small>Absolute percentage error</small></div>
+        <div class="metric"><p>Usable VLE conditions</p><strong id="metric-ok">156 / 156</strong><small>Successful property comparisons</small></div>
+      </div>
+    </div></section>
+
+    <div class="container">
+      <div class="scientific-notice" role="note"><span class="notice-icon" aria-hidden="true">i</span><p><strong>How to read every result on this site:</strong> Errors measure disagreement between ML-parameter PC-SAFT and published-parameter PC-SAFT. They do <b>not</b> measure accuracy against experiments. Both calculations use the same reference-defined temperature grid.</p></div>
+    </div>
+
+    <section class="section" id="question"><div class="container">
+      <div class="section-title"><div><p class="eyebrow">02 / Study design</p><h2>An interpretable experiment.<br><span class="muted">Not a black box.</span></h2></div><p>One molecular structure enters the pipeline; three molecular parameters emerge. We examine whether their errors are acceptable <em>after</em> they pass through the EOS.</p></div>
+      <div class="study-grid">
+        <article class="study-lead"><div class="card-code">RESEARCH QUESTION</div><h3>Can simple structure-derived descriptors reproduce pure-component vapor–liquid equilibrium through learned PC-SAFT parameters?</h3><p>A molecule is represented by its SMILES structure. Its published fitted PC-SAFT parameters are supervised labels, and FeOs calculates saturation properties from those predicted parameters.</p><div class="quiet-rule"></div><p><strong>Prediction-time information:</strong> molecular structure only, not measured saturation pressures, liquid densities or reference parameters.</p></article>
+        <div class="study-tiles"><article><div class="card-code">DATA / 01</div><strong>1,842 → 194</strong><p>Esper2023 source records → curated, single-fragment, saturated C/H hydrocarbons (C3–C20).</p></article><article><div class="card-code">SPLIT / 02</div><strong>155 / 39</strong><p>Frozen training pool and unseen final test. Development validation stayed inside training.</p></article><article><div class="card-code">REFERENCE / 03</div><strong>FeOs</strong><p>Same PC-SAFT formulation, published and predicted parameter paths evaluated at identical temperatures.</p></article><article><div class="card-code">CAUTION / 04</div><strong>Reference ≠ experiment</strong><p>Model fidelity to a published parameter set is distinct from independent experimental accuracy.</p></article></div>
+      </div>
+      <article class="data-profile" aria-label="Data composition"><div class="card-header"><div><div class="card-code">DATA DISTRIBUTION · 194 MOLECULES</div><h3>Which molecules are represented?</h3></div><div class="tabs" role="group" aria-label="Distribution variable"><button type="button" class="tab active" id="hist-carbon" aria-pressed="true">Carbon count</button><button type="button" class="tab" id="hist-rings" aria-pressed="false">Ring count</button></div></div><div id="distribution-chart" class="distribution-chart chart-surface" role="img" aria-label="Distribution of molecule sizes"><p class="empty-message">Connect the exported dataset to view the distribution.</p></div><p class="subcaption">Distribution uses all 194 structures and their input descriptors. It does not display test targets.</p></article>
+    </div></section>
+
+    <section class="section section-alt" id="explorer"><div class="container">
+      <div class="section-title"><div><p class="eyebrow">03 / Property explorer</p><h2>One molecule.<br><span class="muted">Two thermodynamic paths.</span></h2></div><p>Select an unseen hydrocarbon and compare published-parameter PC-SAFT with the frozen Ridge prediction. Every point comes from a saved FeOs calculation.</p></div>
+      <div id="data-warning" class="data-warning" role="alert" hidden></div>
+      <div class="explorer-grid">
+        <div class="explorer-main">
+          <div class="explorer-control-row"><div class="field wide-field"><label for="molecule-select">Molecule / 39 held-out structures</label><select id="molecule-select"><option value="">Load exported results to choose a molecule</option></select></div><div class="field"><label for="property-select">Thermodynamic property</label><select id="property-select"><option value="pressure">Saturation pressure / bar</option><option value="density">Saturated-liquid density / kg m⁻³</option></select></div></div>
+          <div class="chart-frame"><div class="chart-heading"><div><p class="card-code">HELD-OUT MOLECULE</p><h3 id="selected-name">Awaiting verified data</h3><p id="selected-smiles" class="smiles-line">SMILES: —</p></div><div class="chart-figure-error"><span id="selected-error-label">Mean pressure error</span><strong id="selected-error">—</strong></div></div>
+            <div class="legend-row"><span class="legend-item"><span class="legend-line reference"></span> Published parameters</span><span class="legend-item"><span class="legend-line predicted"></span> Ridge-predicted parameters</span></div>
+            <div id="property-chart" class="property-chart chart-surface" role="img" aria-label="Reference and predicted properties versus temperature"><p class="empty-message">Load results.json to view your real thermodynamic curves.</p></div>
+            <div class="chart-footer"><span id="chart-units">Temperature (K) · Pressure (bar)</span><button id="download-molecule" type="button" class="link-button" disabled>Export molecule data ↗</button></div>
+          </div>
+          <div class="detail-columns"><article class="data-card"><div class="card-code">PARAMETER ESTIMATES</div><h3>Published versus predicted</h3><div class="table-wrap"><table><thead><tr><th>Parameter</th><th>Published</th><th>ML</th></tr></thead><tbody id="parameter-body"><tr><td colspan="3">Awaiting data</td></tr></tbody></table></div></article><article class="data-card"><div class="card-code">FOUR EOS STATES</div><h3>Actual thermodynamic values</h3><div class="table-wrap"><table><thead><tr><th>T (K)</th><th>Reference</th><th>ML</th><th>APE</th></tr></thead><tbody id="states-body"><tr><td colspan="4">Awaiting data</td></tr></tbody></table></div></article></div>
+        </div>
+        <aside class="inspector"><div class="card-code">THE DIAGNOSTIC VIEW</div><h3>What does an error mean?</h3><p>A successful EOS calculation is not the same as an accurate predicted pressure.</p><div class="inspector-figure"><span>Final held-out pressure error</span><strong>20.54%</strong><small>Across 156 comparable states</small></div><p>Changes in segment number, diameter and dispersion energy interact inside the equation of state. Their individual MAEs need not predict the property error.</p><div class="inspector-divider"></div><div class="card-code">A DIFFICULT CASE</div><h4>Cycloheptane</h4><p>Its mean pressure error on the frozen test set is <strong>87.05%</strong>, while its mean liquid-density error is <strong>3.75%</strong>. Both belong in the analysis.</p><button class="text-link" id="inspect-outlier" type="button">Inspect cycloheptane <span aria-hidden="true">↗</span></button><div class="inspector-divider"></div><div class="card-code">TEMPERATURE BASIS</div><p>Four temperatures per molecule, evaluated at 0.65, 0.70, 0.75 and 0.80 times the <em>reference-parameter</em> critical temperature.</p></aside>
+      </div>
+      <div class="molecule-table" aria-label="Full held-out dataset"><div class="card-header"><div><div class="card-code">39 / FROZEN TEST MOLECULES</div><h3>Inspect all molecular errors</h3></div><div class="table-controls"><div class="field"><label for="molecule-search">Filter molecules</label><input type="search" id="molecule-search" placeholder="Name or SMILES"></div><div class="field"><label for="molecule-sort">Sort results</label><select id="molecule-sort"><option value="pressure-desc">Largest pressure error</option><option value="pressure-asc">Smallest pressure error</option><option value="density-desc">Largest density error</option><option value="name">Molecule A–Z</option></select></div></div></div><div class="table-wrap"><table class="result-table"><thead><tr><th>Molecule</th><th>SMILES</th><th>Pressure APE</th><th>Density APE</th><th>Converged</th><th></th></tr></thead><tbody id="molecule-table-body"><tr><td colspan="6">Awaiting data</td></tr></tbody></table></div><div class="table-footer">Click “Inspect” to update the molecular curves above. Outliers are retained in the reported means.</div></div>
+    </div></section>
+
+    <section class="section" id="models"><div class="container"><div class="section-title"><div><p class="eyebrow">04 / Model evolution</p><h2>More features.<br><span class="muted">Different errors.</span></h2></div><p>The research involved 5, 12, 28 and 156 descriptors, and three regression families. See the tradeoffs without conflating units or data splits.</p></div>
+      <div class="lab-toolbar"><div class="field"><label for="lab-target">Target parameter</label><select id="lab-target"><option value="epsilon_k">Dispersion energy / ε/k</option><option value="sigma">Segment diameter / σ</option><option value="m">Segment number / m</option></select></div><div class="field"><label for="lab-metric">Error metric</label><select id="lab-metric"><option value="mae">Mean absolute error</option><option value="rmse">Root mean square error</option></select></div><div class="field"><label for="lab-model">Highlight algorithm</label><select id="lab-model"><option value="all">Show all algorithms</option><option value="Ridge">Ridge</option><option value="Random_Forest">Random Forest</option><option value="Extra_Trees">Extra Trees</option></select></div><span class="lab-context">3-fold CV · 155-molecule training pool</span></div>
+      <div class="lab-grid"><article class="data-card large-chart"><div class="card-header"><div><div class="card-code">ALGORITHM × DESCRIPTOR COUNT</div><h3>Validation error as features increase</h3></div><span class="minor-unit" id="cv-unit">ε/k · MAE · K</span></div><div class="legend-row lab-legend"><span class="legend-item"><span class="legend-line reference"></span> Ridge</span><span class="legend-item"><span class="legend-line predicted"></span> Random Forest</span><span class="legend-item"><span class="legend-line extra"></span> Extra Trees</span></div><div id="cv-chart" class="lab-chart chart-surface" role="img" aria-label="Cross-validation errors versus feature count"><p class="empty-message">Awaiting training-only cross-validation data.</p></div><p class="subcaption" id="cv-caption">Points are 3-fold CV means; vertical whiskers are fold-to-fold standard deviations, not confidence intervals. No curves are interpolated across untested configurations.</p></article><article class="data-card collision-card"><div class="card-code">REPRESENTATION CAPACITY</div><h3>Distinct molecular inputs</h3><p>Two chemically different molecules can share identical descriptors. Extra features may separate them, but cannot guarantee better predictions.</p><div id="collision-list" class="collision-list"><p class="empty-message">Awaiting the descriptor collision audit.</p></div><p class="subcaption">Count of training molecules that share an identical feature vector with at least one other molecule.</p></article></div>
+      <div class="lab-grid secondary-lab"><article class="data-card"><div class="card-code">MODEL × FEATURE COUNT</div><h3>All measured CV configurations</h3><div class="table-wrap"><table class="cv-table"><thead><tr><th>Features</th><th>Ridge</th><th>Random Forest</th><th>Extra Trees</th></tr></thead><tbody id="cv-table-body"><tr><td colspan="4">Awaiting training CV results</td></tr></tbody></table></div><p class="subcaption">Lowest value in the current target/metric is bold. A dash means the combination was not evaluated.</p></article><article class="data-card"><div class="card-code">GENERALIZATION GAP</div><h3>Training versus development</h3><div id="overfit-chart" class="horizontal-chart"><p class="empty-message">Awaiting generalization data.</p></div><p class="subcaption">116 fit / 39 development validation. The final 39 test molecules are not part of this analysis.</p></article></div>
+      <div class="lab-grid secondary-lab"><article class="data-card"><div class="card-header"><div><div class="card-code">DOWNSTREAM EOS · DEVELOPMENT</div><h3>Accuracy where it matters</h3></div><div class="field compact-field"><label for="dev-property">Property</label><select id="dev-property"><option value="pressure">Saturation pressure</option><option value="density">Liquid density</option></select></div></div><div id="downstream-bars" class="horizontal-chart"><p class="empty-message">Awaiting thermodynamic comparison data.</p></div><p class="subcaption">Mean APE relative to published-parameter PC-SAFT on the 39 development-validation molecules, not the reserved final test.</p></article><article class="data-card"><div class="card-code">FINAL HELD-OUT · ONE CHOSEN MODEL</div><h3>Ridge versus mean baseline</h3><div id="baseline-bars" class="horizontal-chart"><p class="empty-message">Awaiting held-out baseline metrics.</p></div><p class="subcaption">Final-test results for the frozen Ridge + 5 model and simple mean predictor. Competing models were never tested on this final split.</p></article></div>
+      <div class="finding-strip"><span class="finding-symbol" aria-hidden="true">→</span><p><strong>The key finding:</strong> Extra Trees with 156 features produced lower errors in fitted parameter prediction, but the 5-descriptor Ridge model produced lower development saturation-pressure error. Models need evaluation at the property level, not just at the surrogate-target level.</p></div>
+    </div></section>
+
+    <section class="section section-alt" id="findings"><div class="container"><div class="section-title"><div><p class="eyebrow">05 / Scientific findings</p><h2>Evidence before<br><span class="muted">easy conclusions.</span></h2></div><p>The purpose is to understand what worked, where it failed, and why physical properties behave differently from ML parameter errors.</p></div>
+      <div class="findings-grid"><article class="finding-card"><span class="finding-count">01</span><h3>A simpler model can give better vapor pressure.</h3><p>Ridge + 5 achieved <strong>16.22%</strong> development pressure APE versus <strong>25.91%</strong> for Extra Trees + 156. Parameter-level improvements did not translate directly to lower EOS pressure error.</p></article><article class="finding-card"><span class="finding-count">02</span><h3>Density and pressure reward different parameter combinations.</h3><p>Ridge + 12 reached <strong>1.79%</strong> development liquid-density error, while Ridge + 5 gave lower pressure error. A single “best model” depends on the property of interest.</p></article><article class="finding-card"><span class="finding-count">03</span><h3>The nonlinear learner shows a training–validation gap.</h3><p>Extra Trees fits training targets closely but its validation errors rise substantially. It still beats Ridge on individual parameter MAEs on that split. The VLE comparison remains a separate test.</p></article></div>
+      <div class="sensitivity-panel"><div><div class="card-code">LOCAL PRESSURE SENSITIVITY</div><h3>Small parameter changes, large pressure effects.</h3><p>Five development molecules were perturbed ±1% in each PC-SAFT parameter. The resulting derivatives suggest sensitivity to dispersion energy and potential cancellation or reinforcement among parameter errors. These are local approximations, not causal proof.</p></div><div id="sensitivity-table" class="table-wrap"><p class="empty-message">Sensitivity measurements become available after the export.</p></div></div>
+    </div></section>
+
+    <section class="section" id="methods"><div class="container"><div class="section-title"><div><p class="eyebrow">06 / Reproducibility</p><h2>Every conclusion<br><span class="muted">needs a trail.</span></h2></div><p>Source data, preprocessing, model selection and the one-time final held-out evaluation should be inspectable, not just asserted.</p></div>
+      <div class="methods-grid"><article><div class="method-index">01</div><h3>Data and filtering</h3><p>Esper2023 parameters from the FeOs repository. Retain saturated, nonassociating C/H-only molecules with 3–20 carbon atoms. Canonicalize SMILES and remove duplicate structures.</p><a href="https://github.com/feos-org/feos/tree/main/parameters/pcsaft" target="_blank" rel="noopener noreferrer">Explore source collection ↗</a></article><article><div class="method-index">02</div><h3>Preprocessing</h3><p>Generate descriptors using RDKit. Apply median imputation and scaling inside a scikit-learn pipeline fitted exclusively on the appropriate training data.</p><p class="code-label">Features: molecular weight, carbon count, rings, rotatable bonds, branch points.</p></article><article><div class="method-index">03</div><h3>Model selection</h3><p>Evaluate mean baseline, Ridge, Random Forest and Extra Trees. Compare parameter errors using three-fold training-only CV and VLE performance using a separate development split.</p><p class="code-label">Frozen choice: Ridge(alpha=1.0), 5 descriptors.</p></article><article><div class="method-index">04</div><h3>Final evaluation</h3><p>Refit selected Ridge on the 155 original training molecules. Evaluate exactly once on 39 held-out molecules at four reference-defined temperatures each. Report all failures and extreme errors.</p><p class="code-label">156/156 reference and ML state comparisons converged.</p></article></div>
+      <div class="methods-footer"><div><h3>What this project does not claim</h3><p>No experimental property accuracy is claimed from the reference-PC-SAFT comparisons. No mixtures, polar/association terms, live browser inference or end-to-end differentiable thermodynamic training were used.</p></div><div><h3>Reproduction notes</h3><p>Static results are exported from saved CSVs. The repository should include the data-download process, requirements, scripts, immutable test split, evaluation configuration and AI-assistance disclosure.</p><p class="code-label">python src/export_website_data.py</p></div></div>
+    </div></section>
+  </main>
+  <footer class="footer"><div class="container footer-grid"><div><div class="footer-brand">ML / PC-SAFT</div><p>Structure. Parameters. Equilibrium.<br>ES 335 · Machine Learning · IIT Gandhinagar</p></div><div><p class="footer-heading">Research source</p><a href="https://github.com/feos-org/feos/tree/main/parameters/pcsaft" target="_blank" rel="noopener noreferrer">FeOs / Esper2023 ↗</a><a href="https://doi.org/10.1039/D4DD00077C" target="_blank" rel="noopener noreferrer">Winter et al., 2025 ↗</a></div><div><p class="footer-heading">Data integrity</p><p id="updated-label">Waiting for exported data</p><p>Frozen test selection. Honest errors. Reproducible calculations.</p></div></div><div class="container copyright"><span>Scientific research dashboard · Carbon-inspired alternative</span><span>Designed from DESIGN.md · Original website is preserved.</span></div></footer>
+</body>
+</html>
