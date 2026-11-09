@@ -1,0 +1,4 @@
+model,n_molecules,n_attempted,n_reference_success,n_predicted_success,n_comparable,mean_ape_percent_on_comparable,macro_mean_molecule_ape_percent,median_molecule_ape_percent
+Ridge_5,39,156,156,156,156,16.22025514441304,16.22025514441304,11.569410576177786
+Ridge_12,39,156,156,156,156,17.955329710660266,17.955329710660266,14.71544041194724
+ExtraTrees_156,39,156,156,156,156,25.909372128087185,25.909372128087185,16.009837085698695

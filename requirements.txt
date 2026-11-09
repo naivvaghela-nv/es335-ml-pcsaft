@@ -5,3 +5,4 @@ matplotlib
 rdkit
 jupyterlab
 pytest
+feos

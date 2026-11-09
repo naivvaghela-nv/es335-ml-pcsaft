@@ -31,3 +31,18 @@ credentials.json
 *.key
 
 results/models/
+
+# Submission cleanup
+*.bak
+*.bak.*
+*.pyc
+__pycache__/
+.pytest_cache/
+.ipynb_checkpoints/
+.venv/
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+results/models/
