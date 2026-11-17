@@ -151,7 +151,8 @@ The reported numerical results come from executed Python scripts and saved proje
 
 
 
-For details, see \[AI Assistance Disclosure](references/AI\_USAGE.md).
+For details, see <a href="references/AI_USAGE.md">AI Assistance Disclosure</a>.
+
 
 \---
 
