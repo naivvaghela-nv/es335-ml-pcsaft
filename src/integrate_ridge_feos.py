@@ -96,15 +96,39 @@ def main():
     # from the published JSON, not RDKit-rounded values in the feature table.
     with raw_path.open(encoding="utf-8") as f:
         raw_records = json.load(f)
+    # Parse the source records without auto-removing explicit hydrogen atoms.
+    # Isolated [H] entries are invalid for our single-fragment hydrocarbon
+    # dataset and would emit RDKit warnings under the default parser.
+    parser_params = Chem.SmilesParserParams()
+    parser_params.removeHs = False
     record_lookup = {}
+    excluded = {"isolated_H": 0, "disconnected": 0,
+                "non_hydrocarbon": 0, "invalid_smiles": 0}
     for record in raw_records:
         if any(key in record for key in ("mu", "q", "association_sites")):
             continue
         smiles = record.get("identifier", {}).get("smiles")
-        mol = Chem.MolFromSmiles(smiles) if smiles else None
-        if mol is not None:
-            canonical = Chem.MolToSmiles(mol, canonical=True)
-            record_lookup.setdefault(canonical, []).append(record)
+        if not isinstance(smiles, str) or not smiles:
+            continue
+        mol_with_h = Chem.MolFromSmiles(smiles, parser_params)
+        if mol_with_h is None:
+            excluded["invalid_smiles"] += 1
+            continue
+        atoms = list(mol_with_h.GetAtoms())
+        if any(a.GetAtomicNum() == 1 and a.GetDegree() == 0 for a in atoms):
+            excluded["isolated_H"] += 1
+            continue
+        if len(Chem.GetMolFrags(mol_with_h)) != 1:
+            excluded["disconnected"] += 1
+            continue
+        if (not any(a.GetAtomicNum() == 6 for a in atoms)
+                or any(a.GetAtomicNum() not in (1, 6) for a in atoms)):
+            excluded["non_hydrocarbon"] += 1
+            continue
+        mol = Chem.RemoveHs(mol_with_h)
+        canonical = Chem.MolToSmiles(mol, canonical=True, isomericSmiles=True)
+        record_lookup.setdefault(canonical, []).append(record)
+    print("FeOs record scan exclusions:", excluded)
 
     rows = []
     for idx, molecule in validation.iterrows():
