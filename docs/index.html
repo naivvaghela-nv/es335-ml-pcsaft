@@ -18,6 +18,7 @@
   </script>
   <link rel="stylesheet" href="assets/carbon.css?v=2">
   <script src="assets/carbon.js?v=2" defer></script>
+  <link rel="stylesheet" href="assets/methodology-faq.css?v=2">
 </head>
 <body>
   <a class="skip" href="#content">Skip to main content</a>
@@ -112,10 +113,81 @@
       <div class="sensitivity-panel"><div><div class="card-code">LOCAL PRESSURE SENSITIVITY</div><h3>Small parameter changes, large pressure effects.</h3><p>Five development molecules were perturbed ±1% in each PC-SAFT parameter. The resulting derivatives suggest sensitivity to dispersion energy and potential cancellation or reinforcement among parameter errors. These are local approximations, not causal proof.</p></div><div id="sensitivity-table" class="table-wrap"><p class="empty-message">Sensitivity measurements become available after the export.</p></div></div>
     </div></section>
 
-    <section class="section" id="methods"><div class="container"><div class="section-title"><div><p class="eyebrow">06 / Reproducibility</p><h2>Every conclusion<br><span class="muted">needs a trail.</span></h2></div><p>Source data, preprocessing, model selection and the one-time final held-out evaluation should be inspectable, not just asserted.</p></div>
+    <section class="section es335-methods-before-faq" id="methods"><div class="container"><div class="section-title"><div><p class="eyebrow">06 / Reproducibility</p><h2>Every conclusion<br><span class="muted">needs a trail.</span></h2></div><p>Source data, preprocessing, model selection and the one-time final held-out evaluation should be inspectable, not just asserted.</p></div>
       <div class="methods-grid"><article><div class="method-index">01</div><h3>Data and filtering</h3><p>Esper2023 parameters from the FeOs repository. Retain saturated, nonassociating C/H-only molecules with 3–20 carbon atoms. Canonicalize SMILES and remove duplicate structures.</p><a href="https://github.com/feos-org/feos/tree/main/parameters/pcsaft" target="_blank" rel="noopener noreferrer">Explore source collection ↗</a></article><article><div class="method-index">02</div><h3>Preprocessing</h3><p>Generate descriptors using RDKit. Apply median imputation and scaling inside a scikit-learn pipeline fitted exclusively on the appropriate training data.</p><p class="code-label">Features: molecular weight, carbon count, rings, rotatable bonds, branch points.</p></article><article><div class="method-index">03</div><h3>Model selection</h3><p>Evaluate mean baseline, Ridge, Random Forest and Extra Trees. Compare parameter errors using three-fold training-only CV and VLE performance using a separate development split.</p><p class="code-label">Frozen choice: Ridge(alpha=1.0), 5 descriptors.</p></article><article><div class="method-index">04</div><h3>Final evaluation</h3><p>Refit selected Ridge on the 155 original training molecules. Evaluate exactly once on 39 held-out molecules at four reference-defined temperatures each. Report all failures and extreme errors.</p><p class="code-label">156/156 reference and ML state comparisons converged.</p></article></div>
       <div class="methods-footer"><div><h3>What this project does not claim</h3><p>No experimental property accuracy is claimed from the reference-PC-SAFT comparisons. No mixtures, polar/association terms, live browser inference or end-to-end differentiable thermodynamic training were used.</p></div><div><h3>Reproduction notes</h3><p>Static results are exported from saved CSVs. The repository should include the data-download process, requirements, scripts, immutable test split, evaluation configuration and AI-assistance disclosure.</p><p class="code-label">python src/export_website_data.py</p></div></div>
     </div></section>
+  <!-- ES335 METHODOLOGY FAQ: START -->
+    <section class="section es335-faq" id="faq" aria-labelledby="es335-faq-title">
+      <div class="container es335-faq-shell">
+        <div class="es335-faq-heading">
+          <div>
+            <p class="eyebrow">07 / QUESTIONS BEHIND THE MODEL</p>
+            <h2 id="es335-faq-title">Questions worth asking.<br><span class="muted">Answers we can defend.</span></h2>
+            <p>Why this model, how it was evaluated, and what its results actually mean.</p>
+          </div>
+          <span class="section-tag">METHODOLOGY Q&amp;A</span>
+        </div>
+
+        <div class="es335-faq-lede" role="note">
+          <span class="es335-faq-lede-label">THE KEY DISTINCTION</span>
+          <p>We chose the final model using <strong>development-set downstream VLE error</strong>, not simply the error in each PC-SAFT parameter. The 39-molecule final test set was kept separate from model selection.</p>
+          <a href="#models">See the model comparisons <span aria-hidden="true">↗</span></a>
+        </div>
+
+        <div class="es335-faq-columns">
+          <div class="es335-faq-column">
+            <h3 class="es335-faq-group-title"><span>01</span> Features &amp; model choice</h3>
+            <details class="es335-faq-item">
+              <summary><span class="es335-faq-num">01</span><span>Did we use principal component analysis (PCA)?</span><span class="es335-faq-toggle" aria-hidden="true">+</span></summary>
+              <div class="es335-faq-answer"><p><strong>No PCA was used in the final predictor.</strong> We retained five original, interpretable RDKit descriptors rather than replacing them with principal components. PCA could be tested in future work, but a high-variance input direction is not necessarily the most useful direction for predicting VLE properties.</p></div>
+            </details>
+            <details class="es335-faq-item">
+              <summary><span class="es335-faq-num">02</span><span>Were the molecular descriptors standardized?</span><span class="es335-faq-toggle" aria-hidden="true">+</span></summary>
+              <div class="es335-faq-answer"><p><strong>Yes, for Ridge regression.</strong> Descriptors have different numerical scales, so standardization helps make its regularization meaningful. The training-fold mean and standard deviation are learned inside the model pipeline and then applied to validation data; the test set must never be used to fit these transformations. Tree models do not generally require feature standardization.</p></div>
+            </details>
+            <details class="es335-faq-item">
+              <summary><span class="es335-faq-num">03</span><span>Which five features does the final model use?</span><span class="es335-faq-toggle" aria-hidden="true">+</span></summary>
+              <div class="es335-faq-answer"><p>Molecular weight, carbon count, ring count, rotatable-bond count and branch-point count. Each is calculated from the molecule's SMILES structure. The final Ridge model predicts the PC-SAFT parameters <em>m</em>, <em>σ</em> and <em>ε/k</em> from these descriptors.</p></div>
+            </details>
+            <details class="es335-faq-item">
+              <summary><span class="es335-faq-num">04</span><span>Why choose Ridge with only five features?</span><span class="es335-faq-toggle" aria-hidden="true">+</span></summary>
+              <div class="es335-faq-answer"><p>The five-descriptor Ridge model gave <strong>16.22% development pressure MAPE</strong>, compared with <strong>17.96%</strong> for Ridge using 12 descriptors. It also used fewer, easier-to-explain inputs. Five was the best choice among the relevant configurations evaluated, not a universal optimum.</p></div>
+            </details>
+            <details class="es335-faq-item">
+              <summary><span class="es335-faq-num">05</span><span>Why did Extra Trees with 156 features have higher pressure error?</span><span class="es335-faq-toggle" aria-hidden="true">+</span></summary>
+              <div class="es335-faq-answer"><p>Extra Trees with 156 features produced <strong>25.91% development pressure MAPE</strong>, despite strong results on some individual parameter metrics. With a relatively small dataset, many correlated or weakly informative features can increase model variance, and the observed training–validation gap suggests overfitting. In addition, PC-SAFT combines parameter errors nonlinearly. These are plausible explanations, <strong>not proof of a single cause</strong>. The comparison changes both the algorithm and the feature count.</p></div>
+            </details>
+          </div>
+
+          <div class="es335-faq-column">
+            <h3 class="es335-faq-group-title"><span>02</span> Evaluation &amp; limitations</h3>
+            <details class="es335-faq-item">
+              <summary><span class="es335-faq-num">06</span><span>Could more than five features reduce the error?</span><span class="es335-faq-toggle" aria-hidden="true">+</span></summary>
+              <div class="es335-faq-answer"><p><strong>Possibly.</strong> More features can improve training fit while worsening validation performance. We compared several representations, including 5, 12, 28 and 156 features; the tested larger configurations did not give a better selected downstream pressure result. A different subset or carefully validated PCA approach might help, but it must be chosen using training/development data, not the frozen final test.</p></div>
+            </details>
+            <details class="es335-faq-item">
+              <summary><span class="es335-faq-num">07</span><span>How did we avoid data leakage?</span><span class="es335-faq-toggle" aria-hidden="true">+</span></summary>
+              <div class="es335-faq-answer"><p>We split by <strong>molecule</strong>, reserving 39 of 194 curated hydrocarbons for final testing. Model comparisons and preprocessing fits were performed using the other 155 molecules, with cross-validation inside that pool. The final test was used for reporting, not for picking a new model. A random molecule split can still place chemically similar structures on both sides, which is a limitation.</p></div>
+            </details>
+            <details class="es335-faq-item">
+              <summary><span class="es335-faq-num">08</span><span>Does the 20.54% pressure error measure experimental accuracy?</span><span class="es335-faq-toggle" aria-hidden="true">+</span></summary>
+              <div class="es335-faq-answer"><p><strong>No.</strong> The frozen test gave 20.54% pressure MAPE and 2.66% saturated-liquid-density MAPE <em>relative to FeOs/PC-SAFT calculations with published fitted parameters</em>. These are not comparisons with independently measured experimental VLE data. The 156 tested states correspond to four temperatures for each of 39 molecules.</p></div>
+            </details>
+            <details class="es335-faq-item">
+              <summary><span class="es335-faq-num">09</span><span>Why was pressure harder to predict than liquid density?</span><span class="es335-faq-toggle" aria-hidden="true">+</span></summary>
+              <div class="es335-faq-answer"><p>Saturation pressure can respond strongly and nonlinearly to combined errors in the PC-SAFT parameters. Our local sensitivity analysis on five development molecules suggested particular sensitivity to dispersion energy and segment number. Parameter errors may reinforce or partly cancel. That supports a possible mechanism, but does not establish a universal explanation.</p></div>
+            </details>
+            <details class="es335-faq-item">
+              <summary><span class="es335-faq-num">10</span><span>What are the main limitations and next steps?</span><span class="es335-faq-toggle" aria-hidden="true">+</span></summary>
+              <div class="es335-faq-answer"><p>The dataset contains only a limited class of nonpolar hydrocarbons. The temperature grid relies on the reference model's critical temperature, and the evaluation does not establish experimental VLE accuracy. Strong next steps would be external experimental validation, structure-aware split tests, uncertainty estimates, and development-only comparisons of alternative feature sets.</p></div>
+            </details>
+          </div>
+        </div>
+        <div class="es335-faq-footnote">Answers reflect the evaluated project, not claims of universal model superiority. See <a href="#findings">scientific findings</a> and <a href="#methods">methods and reproducibility</a> for supporting context.</div>
+      </div>
+    </section>
+    <!-- ES335 METHODOLOGY FAQ: END -->
   </main>
   <footer class="footer"><div class="container footer-grid"><div><div class="footer-brand">ML / PC-SAFT</div><p>Structure. Parameters. Equilibrium.<br>ES 335 · Machine Learning · IIT Gandhinagar</p></div><div><p class="footer-heading">Research source</p><a href="https://github.com/feos-org/feos/tree/main/parameters/pcsaft" target="_blank" rel="noopener noreferrer">FeOs / Esper2023 ↗</a><a href="https://doi.org/10.1039/D4DD00077C" target="_blank" rel="noopener noreferrer">Winter et al., 2025 ↗</a></div><div><p class="footer-heading">Data integrity</p><p id="updated-label">Waiting for exported data</p><p>Frozen test selection. Honest errors. Reproducible calculations.</p></div></div><div class="container copyright"><span>Scientific research dashboard · Carbon-inspired alternative</span><span>Designed from DESIGN.md · Original website is preserved.</span></div></footer>
 </body>
